@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1773908047411,
+      "tag": "0000_condemned_robbie_robertson",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1773910143874,
+      "tag": "0001_sticky_carmella_unuscione",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773914700975,
+      "tag": "0002_nifty_stick",
+      "breakpoints": true
+    }
+  ]
+}
