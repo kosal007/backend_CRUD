@@ -16,6 +16,18 @@ export function toApiError(error: unknown): ApiError {
     return error;
   }
 
+  const dbErrorCode =
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof (error as { code?: unknown }).code === "string"
+      ? (error as { code: string }).code
+      : undefined;
+
+  if (dbErrorCode === "23505") {
+    return new ApiError("A record with the same unique value already exists.", 409);
+  }
+
   if (error instanceof SyntaxError) {
     return new ApiError("Invalid JSON body.", 400);
   }
@@ -45,6 +57,17 @@ export function ensureNonEmptyString(value: unknown, fieldName: string): string 
   }
 
   return value.trim();
+}
+
+export function ensureEmail(value: unknown, fieldName = "email"): string {
+  const email = ensureNonEmptyString(value, fieldName).toLowerCase();
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if (!isValid) {
+    throw new ApiError(`${fieldName} must be a valid email address.`, 400);
+  }
+
+  return email;
 }
 
 export function ensurePrice(value: unknown, fieldName = "price"): number {
