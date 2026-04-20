@@ -18,6 +18,13 @@ if (process.env.NODE_ENV !== "production") {
   globalForRedis.redisClient = redisClient;
 }
 
+redisClient.on("error", (error) => {
+  console.error("[Redis] connection error", error.message);
+});
+
 if (redisClient.status === "wait") {
-  void redisClient.connect();
+  void redisClient.connect().catch((error: unknown) => {
+    const message = error instanceof Error ? error.message : "Unknown Redis connect error";
+    console.warn("[Redis] initial connect failed; continuing without Redis", message);
+  });
 }

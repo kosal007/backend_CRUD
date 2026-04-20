@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_ENV=development node server.js",
+    "dev:next": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "server:dev": "tsx watch src/server/index.ts",
     "server:start": "tsx src/server/index.ts",
     "lint": "eslint",
@@ -25,6 +26,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "tailwindcss": "^4.2.2",
     "uuid": "^13.0.0"
   },
