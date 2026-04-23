@@ -39,6 +39,7 @@ export const users = pgTable("users", {
   email:     text("email").notNull().unique(),
   password:  text("password").notNull(),       // store hashed
   role:      roleEnum("role").notNull().default("ROLE_B"),
+  pushToken: text("push_token"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 export type User    = typeof users.$inferSelect;
