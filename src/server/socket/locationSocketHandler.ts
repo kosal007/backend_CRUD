@@ -7,6 +7,7 @@ export const MANAGER_ROOM = "managers";
 
 type ClientToServerEvents = {
   "manager:join": (payload: { managerId: string }) => void;
+  "send-location": (payload: { userId: string; latitude: number; longitude: number }) => void;
   "manager:location:get": (
     payload: { userId: string },
     ack?: (response: { ok: boolean; data?: unknown; error?: string }) => void
@@ -25,8 +26,38 @@ export function registerLocationSocketHandlers(
   io: Server<ClientToServerEvents, ServerToClientEvents>
 ): void {
   io.on("connection", (socket: Socket<ClientToServerEvents, ServerToClientEvents>) => {
-    socket.on("manager:join", () => {
+    console.log("[Socket Debug] Client connected", {
+      socketId: socket.id,
+      transport: socket.conn.transport.name,
+      origin: socket.handshake.headers.origin,
+      address: socket.handshake.address,
+    });
+
+    socket.onAny((eventName, ...args) => {
+      console.log("[Socket Debug] Incoming event", {
+        socketId: socket.id,
+        event: eventName,
+        args,
+      });
+    });
+
+    socket.on("send-location", (payload) => {
+      console.log("[Socket Debug] send-location received", {
+        socketId: socket.id,
+        userId: payload.userId,
+        latitude: payload.latitude,
+        longitude: payload.longitude,
+      });
+      console.log("[Socket Debug] Full location payload", payload);
+    });
+
+    socket.on("manager:join", (payload) => {
       socket.join(MANAGER_ROOM);
+      console.log("[Socket.IO] manager joined room", {
+        socketId: socket.id,
+        managerId: payload.managerId,
+        room: MANAGER_ROOM,
+      });
     });
 
     socket.on("manager:location:get", async (payload, ack) => {
@@ -46,6 +77,13 @@ export function registerLocationSocketHandlers(
       } catch (error) {
         ack?.({ ok: false, error: error instanceof Error ? error.message : "Invalid location payload" });
       }
+    });
+
+    socket.on("disconnect", (reason) => {
+      console.warn("[Socket Debug] Client disconnected", {
+        socketId: socket.id,
+        reason,
+      });
     });
   });
 }

@@ -108,3 +108,40 @@ export function requireRole(request: Request, allowedRoles: UserRole[]): AuthTok
 
   return auth;
 }
+
+
+// ...existing code...
+
+export type VerifiedToken = {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+};
+
+export function verifyToken(token: string): VerifiedToken | null {
+  try {
+    const decoded = jwt.verify(token, getJwtSecret());
+
+    if (!decoded || typeof decoded === "string") {
+      return null;
+    }
+
+    const { sub, email, name, role } = decoded as Partial<AuthTokenPayload>;
+
+    if (
+      typeof sub !== "string" ||
+      typeof email !== "string" ||
+      typeof name !== "string" ||
+      (role !== "ROLE_A" && role !== "ROLE_B")
+    ) {
+      return null;
+    }
+
+    return { id: sub, email, name, role };
+  } catch {
+    return null;
+  }
+}
+
+// ...existing code...
