@@ -1,0 +1,293 @@
+{
+  "steps": [
+    {
+      "name": "1) GET /api/test-db",
+      "expected": "200",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": null,
+      "networkError": null
+    },
+    {
+      "name": "2) Manager login",
+      "expected": "200",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YTRmNTJlMi0wNzQ2LTQ0NGYtYjU2ZS0wMzAzNTlkY2YwNGEiLCJlbWFpbCI6Im1hbmFnZXIudGVzdC4xNzc1NjIyNjQxNTc4QGV4YW1wbGUuY29tIiwibmFtZSI6Ik1hbmFnZXIgQSBUZXN0Iiwicm9sZSI6IlJPTEVfQSIsImlhdCI6MTc3NjkyNjY3MiwiZXhwIjoxNzc3NTMxNDcyfQ.vg6Ot5AhkV_oUWb_wBjeyFreiojwKD36rlFxLHjnYiA",
+        "user": {
+          "id": "6a4f52e2-0746-444f-b56e-030359dcf04a",
+          "name": "Manager A Test",
+          "email": "manager.test.1775622641578@example.com",
+          "role": "ROLE_A",
+          "createdAt": "2026-04-08T11:30:41.612Z"
+        }
+      },
+      "networkError": null,
+      "hasToken": true
+    },
+    {
+      "name": "3a) Register staff",
+      "expected": "201",
+      "status": 201,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "user": {
+          "id": "d1aeed00-7647-4988-b0aa-5eed4b99f32e",
+          "name": "Validation Staff 2",
+          "email": "staff.validation2.1776926672214@example.com",
+          "role": "ROLE_B",
+          "createdAt": "2026-04-23T13:44:32.295Z"
+        }
+      },
+      "networkError": null,
+      "staffEmail": "staff.validation2.1776926672214@example.com",
+      "staffId": "d1aeed00-7647-4988-b0aa-5eed4b99f32e"
+    },
+    {
+      "name": "3b) Staff login",
+      "expected": "200",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkMWFlZWQwMC03NjQ3LTQ5ODgtYjBhYS01ZWVkNGI5OWYzMmUiLCJlbWFpbCI6InN0YWZmLnZhbGlkYXRpb24yLjE3NzY5MjY2NzIyMTRAZXhhbXBsZS5jb20iLCJuYW1lIjoiVmFsaWRhdGlvbiBTdGFmZiAyIiwicm9sZSI6IlJPTEVfQiIsImlhdCI6MTc3NjkyNjY3MiwiZXhwIjoxNzc3NTMxNDcyfQ.y3n1lMrl3h_5zRLmH7o0G4kg4eSIXI6AdvPaoE5h-lw",
+        "user": {
+          "id": "d1aeed00-7647-4988-b0aa-5eed4b99f32e",
+          "name": "Validation Staff 2",
+          "email": "staff.validation2.1776926672214@example.com",
+          "role": "ROLE_B",
+          "createdAt": "2026-04-23T13:44:32.295Z"
+        }
+      },
+      "networkError": null,
+      "hasToken": true
+    },
+    {
+      "name": "4a) Create store",
+      "expected": "201",
+      "status": 201,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "id": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3",
+        "name": "Validation Store 2 1776926672214",
+        "latitude": 11.5564,
+        "longitude": 104.9282,
+        "radius": 120,
+        "status": "active",
+        "createdAt": "2026-04-23T13:44:32.320Z",
+        "updatedAt": "2026-04-23T13:44:32.320Z"
+      },
+      "networkError": null,
+      "createdStoreId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3"
+    },
+    {
+      "name": "4b) Get store by created id",
+      "expected": "200",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "id": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3",
+        "name": "Validation Store 2 1776926672214",
+        "latitude": 11.5564,
+        "longitude": 104.9282,
+        "radius": 120,
+        "status": "active",
+        "createdAt": "2026-04-23T13:44:32.320Z",
+        "updatedAt": "2026-04-23T13:44:32.320Z"
+      },
+      "networkError": null,
+      "createdStoreId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3"
+    },
+    {
+      "name": "5a) Check-out without check-in",
+      "expected": "reject",
+      "status": 400,
+      "ok": true,
+      "error": "No active attendance session found.",
+      "message": null,
+      "data": null,
+      "networkError": null
+    },
+    {
+      "name": "5b) Invalid userId format",
+      "expected": "reject",
+      "status": 400,
+      "ok": true,
+      "error": "userId must be a valid UUID.",
+      "message": null,
+      "data": null,
+      "networkError": null
+    },
+    {
+      "name": "5c) Invalid storeId format",
+      "expected": "reject",
+      "status": 400,
+      "ok": true,
+      "error": "storeId must be a valid UUID.",
+      "message": null,
+      "data": null,
+      "networkError": null
+    },
+    {
+      "name": "5d) Non-existing UUID userId",
+      "expected": "reject",
+      "status": 404,
+      "ok": true,
+      "error": "User not found.",
+      "message": null,
+      "data": null,
+      "networkError": null,
+      "fakeUserId": "04ea5dca-4e0b-4b9d-a5f1-848112c3472e"
+    },
+    {
+      "name": "5e) Non-existing UUID storeId",
+      "expected": "reject",
+      "status": 404,
+      "ok": true,
+      "error": "Store not found.",
+      "message": null,
+      "data": null,
+      "networkError": null,
+      "fakeStoreId": "2d29641c-6abd-450e-8db2-4295e483b945"
+    },
+    {
+      "name": "5f) Check-in success",
+      "expected": "201 active",
+      "status": 201,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "id": "bf050e1a-2d12-4160-bc56-dc6358259e2a",
+        "userId": "d1aeed00-7647-4988-b0aa-5eed4b99f32e",
+        "storeId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3",
+        "checkInTime": "2026-04-23T06:44:33.027Z",
+        "checkOutTime": null,
+        "status": "active",
+        "totalDuration": null,
+        "createdAt": "2026-04-23T06:44:33.027Z",
+        "updatedAt": "2026-04-23T06:44:33.027Z"
+      },
+      "networkError": null,
+      "sessionId": "bf050e1a-2d12-4160-bc56-dc6358259e2a",
+      "usingStoreId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3"
+    },
+    {
+      "name": "5g) Duplicate check-in",
+      "expected": "reject",
+      "status": 409,
+      "ok": true,
+      "error": "User already has an active attendance session.",
+      "message": null,
+      "data": null,
+      "networkError": null
+    },
+    {
+      "name": "5h) Current while active",
+      "expected": "200 active",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "id": "bf050e1a-2d12-4160-bc56-dc6358259e2a",
+        "userId": "d1aeed00-7647-4988-b0aa-5eed4b99f32e",
+        "storeId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3",
+        "checkInTime": "2026-04-23T06:44:33.027Z",
+        "checkOutTime": null,
+        "status": "active",
+        "totalDuration": null,
+        "createdAt": "2026-04-23T06:44:33.027Z",
+        "updatedAt": "2026-04-23T06:44:33.027Z"
+      },
+      "networkError": null
+    },
+    {
+      "name": "5i) Check-out success",
+      "expected": "200 completed totalDuration>0",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": {
+        "id": "bf050e1a-2d12-4160-bc56-dc6358259e2a",
+        "userId": "d1aeed00-7647-4988-b0aa-5eed4b99f32e",
+        "storeId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3",
+        "checkInTime": "2026-04-23T06:44:33.027Z",
+        "checkOutTime": "2026-04-23T06:44:35.139Z",
+        "status": "completed",
+        "totalDuration": 2112,
+        "createdAt": "2026-04-23T06:44:33.027Z",
+        "updatedAt": "2026-04-23T06:44:35.139Z"
+      },
+      "networkError": null,
+      "totalDuration": 2112
+    },
+    {
+      "name": "5j) Current after check-out",
+      "expected": "200 null/false",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": null,
+      "networkError": null
+    },
+    {
+      "name": "5k) History has completed session",
+      "expected": "200 completed with duration",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "data": [
+        {
+          "id": "bf050e1a-2d12-4160-bc56-dc6358259e2a",
+          "userId": "d1aeed00-7647-4988-b0aa-5eed4b99f32e",
+          "storeId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3",
+          "checkInTime": "2026-04-23T06:44:33.027Z",
+          "checkOutTime": "2026-04-23T06:44:35.139Z",
+          "status": "completed",
+          "totalDuration": 2112,
+          "createdAt": "2026-04-23T06:44:33.027Z",
+          "updatedAt": "2026-04-23T06:44:35.139Z"
+        }
+      ],
+      "networkError": null,
+      "historyCount": 1,
+      "completedSessionId": "bf050e1a-2d12-4160-bc56-dc6358259e2a",
+      "completedDuration": 2112
+    },
+    {
+      "name": "6) No duplicate active remain",
+      "expected": "active count 0 + follow-up checkout rejected",
+      "status": 400,
+      "ok": true,
+      "error": "No active attendance session found.",
+      "message": null,
+      "data": null,
+      "networkError": null,
+      "activeCountInHistory": 0
+    }
+  ],
+  "ids": {
+    "staffId": "d1aeed00-7647-4988-b0aa-5eed4b99f32e",
+    "storeId": "5f7f5a2e-b3fa-47e6-a8e5-48920b785ef3",
+    "sessionId": "bf050e1a-2d12-4160-bc56-dc6358259e2a",
+    "fallbackStoreId": null
+  },
+  "totalDuration": 2112,
+  "verdict": "PASS"
+}

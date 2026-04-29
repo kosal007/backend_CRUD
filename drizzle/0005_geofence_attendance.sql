@@ -1,0 +1,3 @@
+-- Intentionally left empty.
+-- The active migration for this schema version is:
+-- drizzle/0005_lowly_sebastian_shaw.sql

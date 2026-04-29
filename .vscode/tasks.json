@@ -1,0 +1,82 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "run-attendance-api-e2e-test",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"scripts/api-attendance-e2e-test.mjs"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-http-validation-temp",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"/tmp/attendance_validation_run.mjs"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "curl-test-db-once",
+			"type": "shell",
+			"command": "curl",
+			"args": [
+				"-i",
+				"--max-time",
+				"5",
+				"http://localhost:4000/api/test-db"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-http-validation-temp2",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"/tmp/attendance_validation_run.mjs"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-http-validation-temp3",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"/tmp/attendance_validation_run.mjs"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-http-validation-temp4",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"/tmp/attendance_validation_run2.mjs"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-db-migrate",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"db:migrate"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "lint-admin-dashboard",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"lint"
+			],
+			"isBackground": false
+		}
+	]
+}

@@ -78,6 +78,30 @@ export function ensurePrice(value: unknown, fieldName = "price"): number {
   return value;
 }
 
+export function ensureLatitude(value: unknown, fieldName = "latitude"): number {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < -90 || value > 90) {
+    throw new ApiError(`${fieldName} must be a valid latitude between -90 and 90.`, 400);
+  }
+
+  return value;
+}
+
+export function ensureLongitude(value: unknown, fieldName = "longitude"): number {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < -180 || value > 180) {
+    throw new ApiError(`${fieldName} must be a valid longitude between -180 and 180.`, 400);
+  }
+
+  return value;
+}
+
+export function ensureRadius(value: unknown, fieldName = "radius"): number {
+  if (typeof value !== "number" || !Number.isFinite(value) || value <= 0) {
+    throw new ApiError(`${fieldName} must be a valid positive number.`, 400);
+  }
+
+  return value;
+}
+
 export function ensureTimestamp(value: unknown, fieldName = "updated_at"): number {
   if (typeof value !== "number" || !Number.isInteger(value) || value < 0) {
     throw new ApiError(`${fieldName} must be a valid non-negative integer timestamp.`, 400);

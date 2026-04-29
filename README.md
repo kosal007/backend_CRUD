@@ -52,6 +52,78 @@ The app now runs Next.js and Socket.IO on the same server/port.
 
 ## API Features
 
+### 0) Geofence Store APIs
+
+- `GET /api/stores` - list stores (active/inactive)
+- `POST /api/stores` - create store (`ROLE_A` only)
+- `GET /api/stores/:id` - get single store
+- `PUT /api/stores/:id` - update store (`ROLE_A` only)
+- `DELETE /api/stores/:id` - deactivate store (`ROLE_A` only)
+
+Store fields:
+
+- `id`
+- `name`
+- `latitude`
+- `longitude`
+- `radius` (meters)
+- `status` (`active` or `inactive`)
+- `created_at`
+- `updated_at`
+
+### Attendance APIs
+
+- `POST /api/attendance/check-in`
+	- body: `{ "storeId": "<uuid>", "userId"?: "<uuid>" }`
+	- creates active session (staff can only use own user ID)
+- `POST /api/attendance/check-out`
+	- body: `{ "userId"?: "<uuid>" }`
+	- completes active session and computes duration in backend
+- `GET /api/attendance/current?userId=<uuid>`
+	- returns active session or `null`
+- `GET /api/attendance/history?userId=<uuid>`
+	- returns completed sessions for analytics/reporting
+
+Attendance fields:
+
+- `id`
+- `user_id`
+- `store_id`
+- `check_in_time`
+- `check_out_time`
+- `status` (`active` or `completed`)
+- `total_duration` (milliseconds, calculated by backend)
+- `created_at`
+- `updated_at`
+
+Business rules enforced:
+
+- Only one active session per user at a time
+- User and store are validated by backend
+- Check-in fails if user already has active session
+- Check-out fails if there is no active session
+- Inactive stores cannot be used for check-in
+
+## Admin UI Dashboard
+
+A web-based admin dashboard is available in the Next.js app.
+
+- Route: `/admin/dashboard`
+- Home route `/` redirects to `/admin/dashboard`
+
+Sections:
+
+- `/admin/dashboard` - overview cards + active/recent sessions
+- `/admin/stores` - create/edit/deactivate geofence stores
+- `/admin/attendance` - attendance tables with filters (`userId`, `store`, date range)
+- `/admin/analytics` - working hours per user, sessions per store, daily/weekly summaries
+
+Authentication:
+
+- Login uses existing `POST /api/auth/login`
+- Admin data uses bearer token stored in browser local storage (`admin_token`)
+- Only `ROLE_A` can access admin UI data/actions
+
 ### 1) Product APIs
 
 - `GET /api/products` - list non-deleted products
@@ -117,6 +189,9 @@ JWT_SECRET=your-long-random-secret-at-least-16-chars
 # Optional socket client override (frontend)
 # NEXT_PUBLIC_SOCKET_URL=http://YOUR_HOST_IP:4000
 # NEXT_PUBLIC_SOCKET_PORT=4000
+
+# Required for admin store detail map with geofence radius circle
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your-google-maps-javascript-api-key
 ```
 
 ### 3) Generate and run migrations
