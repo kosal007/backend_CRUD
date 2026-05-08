@@ -40,6 +40,43 @@ export async function GET() {
   }
 }
 
+/**
+ * @openapi
+ * /api/products:
+ *   post:
+ *     tags:
+ *       - Product
+ *     summary: Create a product
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *             required:
+ *               - name
+ *               - price
+ *     responses:
+ *       201:
+ *         description: Created product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Validation error
+ */
+
 export async function POST(request: Request) {
   try {
     const payload = await readJsonBody<CreateProductBody>(request);

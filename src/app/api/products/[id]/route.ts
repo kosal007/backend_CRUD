@@ -49,6 +49,95 @@ export async function GET(_: Request, context: RouteContext) {
   }
 }
 
+/**
+ * @openapi
+ * /api/products/{id}:
+ *   get:
+ *     tags:
+ *       - Product
+ *     summary: Get a product by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Product found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Not found
+ *
+ *   put:
+ *     tags:
+ *       - Product
+ *     summary: Update a product by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: Updated product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Validation error
+ *
+ *   delete:
+ *     tags:
+ *       - Product
+ *     summary: Soft-delete a product by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Deleted (soft) product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     deleted:
+ *                       type: boolean
+ *                     updatedAt:
+ *                       type: number
+ */
+
 export async function PUT(request: Request, context: RouteContext) {
   try {
     const { id: rawId } = await context.params;
